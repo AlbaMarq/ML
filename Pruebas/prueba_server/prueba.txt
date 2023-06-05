@@ -1,0 +1,47 @@
+1. Crear el modelo de ML
+
+Hagamos un ejemplo de un modelo de ML basándonos en el ejercicio de 
+Pronóstico de Series Temporales que hace un pronóstico de ventas con 
+redes neuronales con Embeddings. Esta vez no usaremos una notebook de 
+Jupyter, si no, archivos de “texto plano” Python:
+> api_train_model.py 
+
+
+2. Guardar el modelo; Serialización de objetos en Python
+
+El proceso de serialización consiste en poder transformar nuestro modelo 
+en ceros y unos que puedan ser almacenados en un archivo y que luego, al 
+momento de la carga vuelva a regenerar ese mismo objeto, con sus 
+características.
+
+Aunque existen diversas maneras de guardar los modelos, comentemos 
+rápidamente las que usaremos:
+- Pickle de Python para almacenar objetos (en nuestro caso un 
+Transformador que debemos mantener para “reconvertir los resultados 
+escalados” al finalizar de entrenar)
+- h5py para el modelo Keras (podemos guardar el modelo completo ó los 
+pesos asociados a la red)
+
+> serial.py
+No me funbciona, pero ya venían los archivos que se ejecutan
+
+
+3. Crear una API con Flask
+
+Ahora veamos el código con el que crearemos la API y donde incorporaremos 
+nuestro modelo.
+
+Utilizaremos los siguientes archivos:
+- server.py – El servidor Flask
+- test_api.py – Ejemplo de request POST para probar la API
+- utiles.py – las funciones comunes al proyecto
+- api_train_model.py – entreno y creación del modelo, una red neuronal con 
+Embeddings (del ejercicio de TimeSeries).
+- time_series.csv – archivo con datos para el ejercicio
+
+Vamos a la acción:
+- Crearemos un método inicial que será invocado desde la url “predict”
+- Cargaremos el modelo que entrenamos previamente
+- Responderemos peticiones en formato JSON
+
+>> waitress-serve --listen=*:8000 server:app
